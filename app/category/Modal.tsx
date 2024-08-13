@@ -35,7 +35,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       setName("");
       setActive(true);
     }
-  }, [editingCategory]);
+  }, [editingCategory, isOpen]);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -72,16 +72,16 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       <div className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden">
         <div className="relative p-4 w-full max-w-md max-h-full">
-          <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <div className="relative bg-white rounded-lg shadow">
+            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+              <h3 className="text-lg font-semibold text-gray-900">
                 {editingCategory
                   ? "Edit Product Category"
                   : "Create New Product Category"}
               </h3>
               <button
                 type="button"
-                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                 onClick={onClose}
               >
                 <svg
@@ -107,7 +107,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 <div>
                   <label
                     htmlFor="name"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Name
                   </label>
@@ -116,14 +116,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                     required
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="active"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Status
                   </label>
@@ -131,7 +131,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                     id="active"
                     value={active ? "true" : "false"}
                     onChange={(e) => setActive(e.target.value === "true")}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                   >
                     <option value="true">Active</option>
                     <option value="false">Inactive</option>

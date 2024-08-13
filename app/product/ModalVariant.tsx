@@ -109,14 +109,6 @@ const ModalVariant: React.FC<ModalVariantProps> = ({ isOpen, onClose }) => {
     setQty(parseFloat(e.target.value) || 0); // Use parseInt if you want an integer
   };
 
-  const handleUploadImage = () => {
-    if (file) {
-      const formData = new FormData();
-      formData.append("image", file);
-      dispatch(uploadImage(formData));
-    }
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -124,16 +116,16 @@ const ModalVariant: React.FC<ModalVariantProps> = ({ isOpen, onClose }) => {
       <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       <div className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden">
         <div className="relative p-4 w-full max-w-md max-h-full">
-          <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <div className="relative bg-white rounded-lg shadow">
+            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+              <h3 className="text-lg font-semibold text-gray-900">
                 {editingCategory
                   ? "Tambah Variant Produk " + editingCategory.name
                   : "Create New Product"}
               </h3>
               <button
                 type="button"
-                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                 onClick={onClose}
               >
                 <svg
@@ -159,7 +151,7 @@ const ModalVariant: React.FC<ModalVariantProps> = ({ isOpen, onClose }) => {
                 <div>
                   <label
                     htmlFor="code"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Code
                   </label>
@@ -168,14 +160,14 @@ const ModalVariant: React.FC<ModalVariantProps> = ({ isOpen, onClose }) => {
                     id="code"
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                     required
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="name"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Name
                   </label>
@@ -184,14 +176,14 @@ const ModalVariant: React.FC<ModalVariantProps> = ({ isOpen, onClose }) => {
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                     required
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="name"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Quantity
                   </label>
@@ -200,14 +192,14 @@ const ModalVariant: React.FC<ModalVariantProps> = ({ isOpen, onClose }) => {
                     id="qty"
                     value={qty}
                     onChange={handleQtyChange}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                     required
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="price"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Harga
                   </label>
@@ -216,14 +208,14 @@ const ModalVariant: React.FC<ModalVariantProps> = ({ isOpen, onClose }) => {
                     id="price"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                     required
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="image"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Gambar
                   </label>
@@ -232,7 +224,7 @@ const ModalVariant: React.FC<ModalVariantProps> = ({ isOpen, onClose }) => {
                     id="image_location"
                     value={imageLocation}
                     onChange={(e) => setImageLocation(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                     required
                   /> */}
                   <input type="file" onChange={handleFileChange} />
@@ -240,7 +232,7 @@ const ModalVariant: React.FC<ModalVariantProps> = ({ isOpen, onClose }) => {
                 <div>
                   <label
                     htmlFor="active"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Status
                   </label>
@@ -248,7 +240,7 @@ const ModalVariant: React.FC<ModalVariantProps> = ({ isOpen, onClose }) => {
                     id="active"
                     value={active ? "true" : "false"}
                     onChange={(e) => setActive(e.target.value === "true")}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                   >
                     <option value="true">Active</option>
                     <option value="false">Inactive</option>

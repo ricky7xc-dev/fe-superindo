@@ -12,39 +12,17 @@ export default function Page() {
   const dispatch = useAppDispatch();
   const { data, status, current_page, last_page, links, editingCategory } =
     useSelector((state: RootState) => state.productVariants);
-  const products = [
-    {
-      imageSrc: "https://picsum.photos/300/100",
-      title: "Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport",
-      price: "$599",
-    },
-    {
-      imageSrc: "https://picsum.photos/300/100",
-      title: "Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport",
-      price: "$599",
-    },
-    {
-      imageSrc: "https://picsum.photos/300/100",
-      title: "Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport",
-      price: "$599",
-    },
-    {
-      imageSrc: "https://picsum.photos/300/100",
-      title: "Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport",
-      price: "$599",
-    },
-    {
-      imageSrc: "https://picsum.photos/300/100",
-      title: "Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport",
-      price: "$599",
-    },
-    {
-      imageSrc: "https://picsum.photos/300/100",
-      title: "Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport",
-      price: "$599",
-    },
-    // Add more products as needed
-  ];
+  const user = useSelector((state: RootState) => state.auth.user);
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+
+  const [isClient, setIsClient] = useState(false);
+
+  // Set isClient to true after the component has mounted
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handlePageChange = (page: number) => {
     console.log(`Requested page change to: ${page}`);
@@ -58,22 +36,34 @@ export default function Page() {
     dispatch(fetchProductVariant(current_page));
   }, [dispatch, current_page]);
 
+  // Render a consistent UI on the server
+  if (!isClient) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-          {data.map((product, index) => (
-            <ProductCard
-              key={index}
-              imageSrc={
-                process.env.NEXT_PUBLIC_API_URL +
-                "/storage/" +
-                product.image_location
-              }
-              title={product.name}
-              price={product.price}
-            />
-          ))}
+          {isAuthenticated && user ? (
+            data.map((product, index) => (
+              <ProductCard
+                key={index}
+                imageSrc={
+                  process.env.NEXT_PUBLIC_API_URL +
+                  "/storage/" +
+                  product.image_location
+                }
+                title={product.name}
+                price={product.price}
+                qty={product.qty}
+                userId={user.id}
+                productId={product.id}
+              />
+            ))
+          ) : (
+            <div>Please log in to add items to your cart.</div>
+          )}
         </div>
       </div>
       <div className="w-full text-center">

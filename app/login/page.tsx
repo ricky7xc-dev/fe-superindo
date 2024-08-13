@@ -7,16 +7,19 @@ import { useSelector } from "react-redux";
 
 export default function Page() {
   const [username, setUsername] = useState("");
-  const [role, setRole] = useState(""); // Tambahkan state untuk peran
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { status, error, isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { status, error, isAuthenticated, role } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/protected");
+    if (isAuthenticated && role == "admin") {
+      router.push("/");
+    } else if (isAuthenticated && role == "user") {
+      router.push("/transaksi");
     }
   }, [isAuthenticated, router]);
 
@@ -79,12 +82,12 @@ export default function Page() {
                 <button
                   // onClick={handleLogin}
                   type="submit"
-                  className="w-full text-white bg-gray-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                  className="w-full text-white bg-gray-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-12"
                 >
                   Sign in
                 </button>
-                {status === 'loading' && <p>Loading...</p>}
-                {status === 'failed' && <p>{error}</p>}
+                {status === "loading" && <p>Loading...</p>}
+                {status === "failed" && <p>{error}</p>}
               </form>
             </div>
           </div>

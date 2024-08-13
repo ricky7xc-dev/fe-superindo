@@ -47,11 +47,27 @@ const initialState: ProductVariantState = {
   editingCategory: null,
 };
 
+interface FetchProductVariantIdArgs {
+  productId: number;
+  page: number;
+}
+
 export const fetchProductVariant = createAsyncThunk(
   "products/fetchProductVariant",
   async (page: number) => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/product_variants?page=${page}`
+    );
+    const data = await response.json();
+    return data;
+  }
+);
+
+export const fetchProductVariantId = createAsyncThunk(
+  "products/fetchProductVariantId",
+  async ({ productId, page }: FetchProductVariantIdArgs) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/product_variants_get/${productId}?page=${page}`
     );
     const data = await response.json();
     return data;
@@ -129,8 +145,22 @@ const productVariantSlice = createSlice({
     builder.addCase(fetchProductVariant.rejected, (state) => {
       state.status = "failed";
     });
+    builder.addCase(fetchProductVariantId.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(fetchProductVariantId.fulfilled, (state, action) => {
+      state.data = action.payload.data;
+      state.current_page = action.payload.current_page;
+      state.last_page = action.payload.last_page;
+      state.links = action.payload.links;
+      state.status = "succeeded";
+    });
+    builder.addCase(fetchProductVariantId.rejected, (state) => {
+      state.status = "failed";
+    });
   },
 });
 
-export const { setEditingProductVariant, clearMessages } = productVariantSlice.actions;
+export const { setEditingProductVariant, clearMessages } =
+  productVariantSlice.actions;
 export default productVariantSlice.reducer;

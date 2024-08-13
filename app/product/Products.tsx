@@ -10,8 +10,11 @@ import {
   setEditingProduct,
   deleteProduct,
 } from "../../redux/slices/productSlice";
+
+import { setEditingProductVariant } from "../../redux/slices/productVariantSlice";
+
 import Modal from "./Modal";
-import { ProductCategory } from "@/redux/types";
+import { ProductCategory, ProductVariant } from "@/redux/types";
 import ModalVariant from "./ModalVariant";
 
 const ProductCategories = () => {
@@ -35,8 +38,8 @@ const ProductCategories = () => {
     setIsModalOpen(true);
   };
 
-  const handleOpenVariant = (category: ProductCategory) => {
-    dispatch(setEditingProduct(category));
+  const handleOpenVariant = (category: ProductVariant) => {
+    dispatch(setEditingProductVariant(category));
     setIsModalOpenVariant(true);
   };
 
@@ -61,7 +64,7 @@ const ProductCategories = () => {
     }
   };
 
-  console.log(isModalOpenVariant)
+  console.log(isModalOpenVariant);
 
   return (
     <>
@@ -82,7 +85,7 @@ const ProductCategories = () => {
           isOpen={isModalOpenVariant}
           onClose={toggleModalVariant}
         />
-        <label className="sr-only">Search</label>
+        {/* <label className="sr-only">Search</label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none">
             <svg
@@ -105,7 +108,7 @@ const ProductCategories = () => {
             className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
             placeholder="Search for items"
           />
-        </div>
+        </div> */}
       </div>
       <div className="relative overflow-x-auto ">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -158,15 +161,16 @@ const ProductCategories = () => {
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                   >
                     {category.variant_count} |{" "}
-                    <button
-                    //   onClick={() => handleOpenVariant(category)}
+                    <a
+                      //   onClick={() => handleOpenVariant(category)}
+                      href={"/product-variant/" + category.id}
                       className="font-medium text-green-600 hover:underline px-1"
                     >
                       Lihat Semua Variant
-                    </button>
+                    </a>
                   </th>
                   <td className="px-6 py-4">
-                    {category.active ? "Active" : "Inactive"}
+                    {category.status_product ? "Active" : "Inactive"}
                   </td>
                   <td className="px-6 py-4 text-right">
                     <button

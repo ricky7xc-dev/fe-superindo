@@ -2,9 +2,9 @@
 import { fetchInvoice, getInvoice, setDetailInvoice } from "@/redux/slices/invoiceSlice";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { InvoiceVariant } from "@/redux/types";
 import { useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store";
-import { InvoiceVariant } from "@/redux/types";
 import Modal from "./Modal";
 
 export default function Page() {
@@ -17,19 +17,14 @@ export default function Page() {
   );
 
   useEffect(() => {
-    dispatch(fetchInvoice(1));
-  }, [dispatch]);
+    dispatch(getInvoice({ userId: user_id }));
+  }, [dispatch, user_id]);
 
   const handlePageChange = (page: number) => {
     console.log(`Requested page change to: ${page}`);
     if (page >= 1 && page <= last_page) {
-      dispatch(fetchInvoice(page));
+      dispatch(getInvoice({ userId: user_id, page }));
     }
-  };
-
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-    dispatch(setDetailInvoice(null));
   };
 
   const handleEditClick = (category: InvoiceVariant) => {
@@ -38,18 +33,20 @@ export default function Page() {
     setIsModalOpen(true);
   };
 
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+    dispatch(setDetailInvoice(null));
+  };
+
   return (
     <>
       <div className="relative overflow-x-auto ">
         <Modal isOpen={isModalOpen} onClose={toggleModal} />
-        <table className="w-full text-sm text-left text-gray-500">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3">
                 ID Transaksi
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Pembeli
               </th>
               <th scope="col" className="px-6 py-3">
                 Tanggal
@@ -75,16 +72,13 @@ export default function Page() {
                   >
                     {category.code}
                   </th>
-                  <td className="px-6 py-4">
-                    {category.first_name + " " + category.last_name}
-                  </td>
-
                   <td className="px-6 py-4">{category.created_date}</td>
                   <td className="px-6 py-4">
                     {isNaN(Number(category.total_amount))
                       ? "Invalid amount"
                       : Number(category.total_amount) + 12000}
                   </td>
+
                   <td className="px-6 py-4">{category.status}</td>
                   <td className="px-6 py-4 text-right">
                     <button

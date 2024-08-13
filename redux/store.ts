@@ -5,6 +5,8 @@ import productCategoriesReducer from './slices/productCategoriesSlice';
 import productReducer from './slices/productSlice';
 import productVariantReducer from './slices/productVariantSlice';
 import imageReducer from './slices/imageSlice';
+import cartReducer from './slices/cartSlice';
+import invoiceReducer from './slices/invoiceSlice';
 import loggerMiddleware from './loggerMiddleware';
 
 const store = configureStore({
@@ -14,6 +16,8 @@ const store = configureStore({
     products: productReducer,
     productVariants: productVariantReducer,
     image: imageReducer,
+    cart: cartReducer,
+    invoice: invoiceReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(loggerMiddleware),
 });
