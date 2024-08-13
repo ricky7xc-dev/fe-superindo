@@ -16,4 +16,14 @@ npm run dev
 
 Kemudian setup env sesuai dengan port backend
 
+```bash
+Login info
+Admin :
+admin@gmail.com
+123456
+User :
+user@gmail.com 
+123456
+```
+
 # fe-superindo
